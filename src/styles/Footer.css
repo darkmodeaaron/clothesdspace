@@ -1,0 +1,65 @@
+footer {
+    background-color: #1f1f1f;
+    color: white;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 25px;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-column {
+    list-style: none;
+}
+
+.footer-title {
+    color: #b7b7b7;
+    margin-bottom: 10px;
+}
+
+.find-store-btn {
+    padding: 3px 5px;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.column-sub {
+    margin-bottom: 5px;
+}
+
+.socials-column {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-wrapper {
+    width: 22px;
+}
+
+.icon-wrapper img {
+    width: 100%;
+}
+
+@media (max-width: 750px) {
+    .footer-title {
+        font-size: 15px;
+    }
+
+    .find-store-btn {
+        font-size: 15px;
+    }
+
+    .column-sub {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 650px) {
+    .footer-flex {
+        flex-direction: column;
+        gap: 25px;
+    }
+}
