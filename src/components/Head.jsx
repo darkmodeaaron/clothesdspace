@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import '../styles/Head.css'
 
@@ -72,7 +73,7 @@ function Head({hCState}) {
                     <NavSection headerState={headerState} dropdownState={clothingState} dropdownClick={clothingClicked} data={clothingData} stat={hCState}/>
                     <NavSection headerState={headerState} dropdownState={accessoriesState} dropdownClick={accessoriesClicked} data={accessoriesData} stat={hCState}/>
                 </div>
-                <div className='desktop-header-center'><h1 className={`header-logo-text ${headerState ? 'dark' : ''}`}>Clothesstore</h1></div>
+                <Link to={'/'}><div className='desktop-header-center'><h1 className={`header-logo-text ${headerState ? 'dark' : ''}`}>clothesdspace</h1></div></Link>
                 <div className='desktop-header-right'>
                     <div className="cart-img-wrapper"><img src={headerState ? blackCartImg : whiteCartImg} alt="" /></div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 
@@ -9,11 +9,32 @@ import { sweatshirts } from '../data/items';
 export const Sweatshirt = () => {
 
   const [currentItem, setCurrentItem] = useState('')
+  const [itemIndex, setItemIndex] = useState('')
+  const [sizeIndex, setSizeIndex] = useState('')
 
-  useEffect (() => {  
-    let currentT = JSON.parse(localStorage.getItem('/Sweatshirts'))
-    setCurrentItem(currentT)
-}, []);
+  useEffect(() => {  
+    let currentT = JSON.parse(localStorage.getItem('/Sweatshirts'));
+    if (currentT) {
+      setCurrentItem(currentT);
+    }
+
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('/Sweatshirts', JSON.stringify(currentItem))
+    for (let i = 0; i < sweatshirts.length; i++) {
+      if (sweatshirts[i].colorName == currentItem.colorName) {
+        setItemIndex(i)
+      }
+    }
+
+    for (let i = 0; i < sweatshirts.length; i++) {
+      if (sweatshirts[i].colorName == currentItem.colorName) {
+        setItemIndex(i)
+      }
+    }
+    console.log(itemIndex)
+  }, [currentItem])
 
   function colorSelect(color) {
     const newColor = sweatshirts.filter((item) => item.color == color)
@@ -22,6 +43,7 @@ export const Sweatshirt = () => {
 
   function addSize(size) {
     currentItem.size = `${size}`
+    setSizeIndex(size)
   }
 
   function atc(item) {
@@ -36,11 +58,10 @@ export const Sweatshirt = () => {
     <>
       <div className='spacer'></div>
       <div className='product-page-flex'>
-        <div className='product-left'>
+        <div className='product-page-left'>
           <Swiper className="mySwiper2"  
             spaceBetween={0}
             slidesPerView={1}
-            onSwiper={(swiper) => console.log(swiper)}
             pagination={{ clickable: true,}}
             modules={[Pagination]}
           >
@@ -49,28 +70,65 @@ export const Sweatshirt = () => {
 
           </Swiper>
         </div>
-        <div className='product-right'>
+        <div className='product-page-right'>
           <h1 className='product-name'>{currentItem.itemName}</h1>
           <h1 className='product-price'>£{currentItem.itemPrice} </h1>
+          <h2 className='product-description'>{currentItem.des}</h2>
+          <h3 className='select-option-title'>Select colour</h3>
           <div className='color-selector-wrapper'>
             {sweatshirts.map((item, index) => {
-              return <div onClick={() => colorSelect(item.color)} key={index} style={{backgroundColor:item.color}} className='color-selector-circle'></div>
+              return <ColorCircle id={item.id} col={item.color} clickFunction={() => colorSelect(item.color, index)} key={index} kup={index} ii={itemIndex}></ColorCircle>
             })}
           </div>
-          <div className='select-size'>
-            <div className='select-size-text-wrapper'>
-                <h3 className='select-size-text'>Select Size</h3>
-                <h3 className='sizecomp-text'>Sizecomp</h3>
-            </div>
-            <div className='sizes-selector-wrapper'>
-                { sizes.map((size, index) => {
-                    return <div className='size-selector' key={index} onClick={() => addSize(size)}>{size}</div>
-                })}
-            </div>
+          <h3 className='select-option-title'>Select size</h3>
+          <div className='sizes-selector-wrapper'>
+              { sizes.map((size, index) => {
+                  return <SizeRectangle letter={size} key={index} clickFunction={() => addSize(size)} si={sizeIndex}></SizeRectangle>
+              })}
           </div>
           <button className='atc-btn' onClick={() => atc(currentItem)}>Add to cart</button>
         </div>    
       </div>     
     </>
+  )
+}
+
+const ColorCircle = ({clickFunction, col , ii, kup}) => {
+
+  const [colorTrue, setColorTrue] = useState(false)
+
+  useEffect(() => {
+    // Update colorTrue when kup is equal to ii
+    setColorTrue(kup === ii);
+    if ( kup == ii) {
+      setColorTrue(true)
+    } else {
+      setColorTrue(false)
+    }
+  }, [kup, ii]);
+
+
+  return (
+    <div className={`color-selector-circle ${colorTrue ? 'active' : ''}`} onClick={clickFunction} style={{backgroundColor:col, }}></div>
+  )
+}
+
+const SizeRectangle = ({clickFunction, ii, kup, letter, si}) => {
+
+  const [colorTrue, setColorTrue] = useState(false)
+
+  useEffect(() => {
+    // Update colorTrue when kup is equal to ii
+    setColorTrue(letter === si);
+    if ( si == letter) {
+      setColorTrue(true)
+    } else {
+      setColorTrue(false)
+    }
+  }, [si, letter]);
+
+
+  return (
+    <div className={`size-selector ${colorTrue ? 'active' : ''}`} onClick={clickFunction}>{letter}</div>
   )
 }

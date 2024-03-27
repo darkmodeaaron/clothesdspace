@@ -14,7 +14,7 @@ header {
     z-index: 99;
 }
 .desktop-header.active {
-    background-color: white;
+    background-color: #ececec;
 }
 
 .desktop-header-left {
@@ -75,7 +75,7 @@ header {
 
 .dropdown-section {
     visibility: hidden;
-    background-color: white;
+    background-color: #ececec;
     position: absolute;
     left: 0;
     right: 0;

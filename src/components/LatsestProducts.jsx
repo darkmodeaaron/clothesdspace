@@ -46,7 +46,6 @@ function LatestProductItem({data}) {
 
     function addItem(item) {
         localStorage.setItem(`${item.destination}`, JSON.stringify(item))
-        console.log(item)
     }
 
     return (
